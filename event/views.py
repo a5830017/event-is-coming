@@ -14,11 +14,11 @@ def home(request):
     return render(request, 'home.html', context, context2)
 
 
-def create_event(request):
+def new_event(request):
     if request.method == 'POST':
         Event.objects.create(event_name=request.POST['name'], event_detail=request.POST['detail'],
             event_numset=request.POST['numset'], event_location=request.POST['location'])
-        return redirect('/')
+        return HttpResponseRedirect(reverse('event:home',))
 
     event = Event.objects.all()
     return render(request, 'create_event.html', {'event': event})

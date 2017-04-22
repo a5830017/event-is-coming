@@ -4,7 +4,7 @@ from django.db import models
 class Event(models.Model):
     event_name = models.TextField(default='') #name
     event_detail = models.TextField(default='') #detail
-    event_numset = models.TextField(default='') #limit for start
+    event_numset = models.IntegerField(default=0) #limit for start
     event_location = models.TextField(default='') #location
     #date = models.DateTimeField(default=timezone.now())#'date published')YYYY-MM-DD HH:MM
 
