@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <h1>Create</h1>
+        <form method="POST">
+            Event Name : <input type="text" name="name" id="id_name" placeholder="Event name" /></br>
+            Detail : <input type="text" name="deatail" id="id_detail" placeholder="Event detail" /></br>
+            Location : <input type="text" name="location" id="id_location" placeholder="Event Location" /></br>
+            Number people for start event : <input type="number" name="numset" id="id_numset" />
+            <br><input type="submit" value="Submit" />
+            {% csrf_token %}
+        </form>
+    </body>
+</html>

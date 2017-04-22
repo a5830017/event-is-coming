@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Event Start</title>
+    </head>
+    <body>
+        <h1>Event</h1>
+
+
+        {% if event_list %}
+            <ul>
+                {% for event in event_list %}
+                    <li><a href="{{ event.id }}/">{{ event.event_name }} -- {{ person.pcount }} / {{ event.event_numset }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Sorry no event</p>
+        {% endif %}
+
+        <a href="create/">Start new Event
+    </body>
+</html>        
