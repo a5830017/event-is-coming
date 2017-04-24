@@ -6,11 +6,23 @@
         Start at : {{event.event_numset}} person<br>
         Total register : {{event.pcount}}
 
+
+        <h3>Person register list</h3>
+        {% if event.person_set.all %}
+            {% for person in event.person_set.all %}
+            <tr>
+                <td>{{ forloop.counter }}: {{ person.fname }} - {{ person.lname }}</td>
+            </tr>
+            {% endfor %}           
+        {% else %}
+            <p>No anyone register</p>
+        {% endif %}
+
         <h2>Register</h2>
         <form action="{% url 'event:event_detail' event.id %}" method="POST">
             {% csrf_token %}
-            First Name : <input type="text" name="fname" id="id_fname" placeholder="Your first name" /> -   
-            Last Name : <input type="text" name="lname" id="id_lname" placeholder="Your last name" /></br>
+            First Name : <input type="text" name="firstname" id="id_firstname" placeholder="Your first name" /> -   
+            Last Name : <input type="text" name="lastname" id="id_lastname" placeholder="Your last name" /></br>
             <input type="submit" value="Submit" />
         </form>
     </body>

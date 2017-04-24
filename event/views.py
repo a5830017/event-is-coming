@@ -25,14 +25,14 @@ def new_event(request):
 def event_detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     if request.method == 'POST':
-        Person.objects.create(fname=request.POST['fname'], lname=request.POST['lname'])
+        event.person_set.create(fname=request.POST['firstname'], lname=request.POST['lastname'])
         event.pcount += 1
         event.save()
         return HttpResponseRedirect(reverse('event:event_detail',args=(event.id,)))
-        #return HttpResponseRedirect(reverse('event_detail',kwargs={'event_id':event_id}))
-        #return HttpResponseRedirect(reverse('event:event_detail',args=(event.id,)))
-
-    return render(request, 'detail.html', {'event':event})
+        
+    return render(request, 'detail.html', {'event':event},)
 
 def sign_name(request, event_id):
     pass
+    #return HttpResponseRedirect(reverse('event_detail',kwargs={'event_id':event_id}))
+        #return HttpResponseRedirect(reverse('event:event_detail',args=(event.id,)))

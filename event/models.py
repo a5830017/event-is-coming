@@ -10,5 +10,6 @@ class Event(models.Model):
     #date = models.DateTimeField(default=timezone.now())#'date published')YYYY-MM-DD HH:MM
 
 class Person(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, default=1)
     fname = models.TextField(default='') #first name
     lname = models.TextField(default='') #last name
