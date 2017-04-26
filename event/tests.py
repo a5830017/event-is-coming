@@ -28,15 +28,24 @@ class CreateEventPageTest(TestCase):
         self.assertTemplateUsed(response, 'create_event.html')
 
     def test_can_save_a_POST_request(self):
-        self.client.post('/new_event', data={'name': 'event name' , 'detail': 'event detail', 'location': 'event location', 'number': 10})
+        self.client.post('/new_event', data={'name': 'event name' , 'detail': 'event detail', 'numset': 10, 'location': 'event location'})
 
-        self.assertEqual(Item.objects.count(), 1)
+        self.assertEqual(Event.objects.count(), 1)
         new_event = Event.objects.first()
         self.assertEqual(new_event.event_name, 'event name')
         self.assertEqual(new_event.event_detail, 'event detail')
-        self.assertEqual(new_event.event_numset, '10')
+        self.assertEqual(new_event.event_numset, 10)
         self.assertEqual(new_event.event_location, 'event location')
-        self.assertEqual(new_event.pcount, '0')
+        self.assertEqual(new_event.pcount, 0)
+
+    def test_redirects_after_POST(self):
+        response = self.client.post('/new_event', data={'name': 'event name' , 'detail': 'event detail', 'numset': 10, 'location': 'event location'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
+
+    def test_only_saves_items_when_necessary(self):
+        self.client.get('/new_event')
+        self.assertEqual(Event.objects.count(), 0)
         
 
 
@@ -49,6 +58,17 @@ class DetailEventPageTest(TestCase):
         response = self.client.get('/1/')
         self.assertTemplateUsed(response, 'detail.html')
 
+    def test_displays_person_list_name(self):
+        event = Event.objects.create(event_name='Event 1', event_detail='Detail 1',
+            event_numset=2, event_location='Location 1', pcount=0,)
+
+        event.person_set.create(fname='John', lname='Farmer')
+
+        response = self.client.get('/1/')
+
+        self.assertIn('John', response.content.decode())
+        self.assertIn('Farmer', response.content.decode())
+
 
 
 class EventModelTest(TestCase):
@@ -57,6 +77,12 @@ class EventModelTest(TestCase):
 
         event = Event.objects.create(event_name='Event 1', event_detail='Detail 1',
             event_numset=2, event_location='Location 1', pcount=0,)
+
+        saved_event = Event.objects.all()
+        self.assertEqual(saved_event.count(), 1)
+        
+        name = saved_event[0]
+        self.assertEqual(name.event_name, 'Event 1')
         
         person1 = event.person_set.create(fname='John', lname='Farmer')
         person1.save()
