@@ -10,7 +10,7 @@ MAX_WAIT = 10
 class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome()
 
     def tearDown(self):
         self.browser.quit()
@@ -23,7 +23,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Event', header_text)
 
 
-    def test_can_create_new_event(self):
+    def test_can_create_new_event_and_register(self):
         self.browser.get(self.live_server_url+'/new_event')
 
         header_text = self.browser.find_element_by_tag_name('h1').text
@@ -73,21 +73,40 @@ class NewVisitorTest(LiveServerTestCase):
             ''
         )
 
-        inputbox_num.send_keys('100')
+        inputbox_num.send_keys('10')
 
         time.sleep(1)
 
         submit = self.browser.find_element_by_id('id_submit')
         submit.click()
 
-        self.fail('Finish the test!')
+        time.sleep(1)
 
-        
-
-    def interested_event_can_register_name(self):
         self.browser.get(self.live_server_url+'/1/')
 
+        time.sleep(1)
+
+        fname_box = self.browser.find_element_by_id('id_firstname')
+
+        fname_box.send_keys('จอน')
+
+        lname_box = self.browser.find_element_by_id('id_lastname')
+
+        lname_box.send_keys('ชาวไร่')
+
+        time.sleep(3)
+
+        submit = self.browser.find_element_by_id('id_submit')
+        submit.click()
+
+        time.sleep(3)
+
         self.fail('Finish the test!')
+
+    '''def interested_event_can_register_name(self):
+        self.browser.get(self.live_server_url+'/1/')
+
+        self.fail('Finish the test!')'''
 
 
 

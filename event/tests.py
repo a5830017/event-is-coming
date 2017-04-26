@@ -70,6 +70,26 @@ class DetailEventPageTest(TestCase):
         self.assertIn('Farmer', response.content.decode())
 
 
+    def test_can_save_a_POST_request(self):
+        event = Event.objects.create(event_name='Event 1', event_detail='Detail 1',
+            event_numset=2, event_location='Location 1', pcount=0,)
+
+        self.client.post('/1/', data={'firstname': 'firstname' , 'lastname': 'lastname'})
+
+        self.assertEqual(event.person_set.count(), 1)
+        new_person = event.person_set.first()
+        self.assertEqual(new_person.fname, 'firstname')
+        self.assertEqual(new_person.lname, 'lastname')
+
+    def test_redirects_after_POST(self):
+        event = Event.objects.create(event_name='Event 1', event_detail='Detail 1',
+            event_numset=2, event_location='Location 1', pcount=0,)
+
+        response = self.client.post('/1/', data={'firstname': 'firstname' , 'lastname': 'lastname'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/1/')
+
+
 
 class EventModelTest(TestCase):
 
