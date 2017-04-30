@@ -11,7 +11,30 @@
         {% if event.person_set.all %}
             {% for person in event.person_set.all %}
             <tr>
+                <form action="{% url 'event:del' event.id %}" method="POST">
+                {% csrf_token %}
                 <td>{{ forloop.counter }}: {{ person.fname }} - {{ person.lname }}</td>
+                <td><button type="submit" name="del_btn" value="{{ person.id }}" onclick="myFunction()" >Delete</button></a></td>
+
+
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var txt;
+    if (confirm("Press a button!") == true) {
+        value = "{{ person.id }}";
+    } else {
+        value = null;
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+</script>
+
+                
+                </br>
+                </form>
             </tr>
             {% endfor %}           
         {% else %}

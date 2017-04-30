@@ -89,6 +89,10 @@ class DetailEventPageTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'], '/1/')
 
+    def test_only_saves_items_when_necessary(self):
+        self.client.get('/1/')
+        self.assertEqual(Event.objects.count(), 0)
+
 
 
 class EventModelTest(TestCase):

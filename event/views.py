@@ -36,3 +36,16 @@ def sign_name(request, event_id):
     pass
     #return HttpResponseRedirect(reverse('event_detail',kwargs={'event_id':event_id}))
         #return HttpResponseRedirect(reverse('event:event_detail',args=(event.id,)))
+
+def delete_name(request, event_id):    #, person_id
+    event = get_object_or_404(Event, pk=event_id)
+    person_name = event.person_set.get(pk=request.POST['del_btn'])#request.POST['del_btn']
+    person_name.delete()
+    event.pcount -= 1
+    event.save()
+    return HttpResponseRedirect(reverse('event:event_detail',args=(event.id,)))
+
+def delete_event(password, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    del_event = event.objects.all()
+    del_event.delete()  
