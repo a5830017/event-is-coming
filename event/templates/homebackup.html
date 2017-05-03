@@ -2,20 +2,9 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'event/homebg.css' %}" />
 
-<link rel="stylesheet" type="text/css" href="{% static 'event/tablehyperlink.css' %}" />
-
-
+<link rel="stylesheet" type="text/css" href="{% static 'event/navi.css' %}" />
 
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-
 <style>
 table {
     border-collapse: collapse;
@@ -23,14 +12,7 @@ table {
 
 table, td, th {
     border: 1px solid black;
-    text-align: center;
 }
-
-h1 {
-  background-color: rgba(255, 255, 0, 0.5);
-  color: black;
-}
-
 
 .button {
     background-color: #4CAF50; /* Green */
@@ -73,68 +55,55 @@ a:active {
     color: green;
 }
 
+#banner {
+  
+  margin: 0 auto;
+  padding: 0;
+  background-color: rgba(128, 223, 255, 0.3);
+}
+
+#banner h1 {
+  margin: 0;
+  padding: 25px;
+  color: #800033;
+}
+
 </style>
 
     <head>
         <title>Event Start</title>
     </head>
     <body>
-
-            <div class="text-center">
-
-            <h1>Event</h1>
-         
-            </div>
-      
-
-
-
-
-
-        
-        
-        
-        
+        <div id="banner">
+        <h1 style= "text-align:center;">Event</h1>
+        </div>
+        <br>
         <div style="text-align:center">  
         <a class="button buttonBlack" href="new_event">Start new Event</a>
         </div>
         <br>
         <br>
-        
-
-
-
-        <table class="table table-inverse table-hover">
-  <thead class="alert alert-info">
-  {% if event_list %}
-    <tr>
-      <th>Event ID</th>
-      <th>Event</th>
-      <th>Count / at least</th>
-    </tr>
-  </thead>
-  <tbody>
-
-  {% for event in event_list %}
-    <tr class='alert alert-success'>
-    
-    
-      <td scope="row">{{ event.id }}</td>
-      <td><a href="{{ event.id }}/">{{ event.event_name }}</a></td>
-      <td>{{ event.pcount }} / {{ event.event_numset }}</td>
-    </tr>
-    {% endfor %}
-
-    {% else %}
-    
-    <div class="alert alert-danger" role="alert">
-  <strong>Sorry no event!</strong>
-  <a href="new_event" class="alert-link">Create new here</a>.
-</div>
-    
-    {% endif %}
-  </tbody>
-</table>
+        <table style="text-align:center;" align="center">
+        <tr>
+    <th bgcolor="#ccff66">Event ID</th>
+    <th bgcolor="#ccff66">Event</th>
+    <th bgcolor="#ccff66">Count</th>
+  </tr>
+        {% if event_list %}
+            
+                {% for event in event_list %}
+                <tr>
+                    <td bgcolor="#ffffcc"> {{ event.id }} </td>
+                    <td bgcolor="#ffffcc"><a href="{{ event.id }}/">{{ event.event_name }}</a></td> <td bgcolor="#ffffcc">{{ event.pcount }} / {{ event.event_numset }}</td>
+                </tr>
+                {% endfor %}
+            
+        {% else %}
+        <tr><td bgcolor="#ffffcc">
+            <p>Sorry no event</p>
+            </td></tr>
+        {% endif %}
+        </table>
 
         <form action="{% url 'event:del_event' %}" method="POST">
         Delete Event by ID <br>
@@ -144,4 +113,4 @@ a:active {
         {% csrf_token %}
         </form>
     </body>
-</html> 
+</html>        

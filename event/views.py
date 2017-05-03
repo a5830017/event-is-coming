@@ -45,7 +45,45 @@ def delete_name(request, event_id):    #, person_id
     event.save()
     return HttpResponseRedirect(reverse('event:event_detail',args=(event.id,)))
 
-def delete_event(password, event_id):
-    event = get_object_or_404(Event, pk=event_id)
-    del_event = event.objects.all()
-    del_event.delete()  
+def delete_event(request):
+    password = "delete"
+    if request.method == 'POST':
+        event = get_object_or_404(Event, pk=request.POST['numdel'])
+        #id_event = Event.objects.get(pk=request.POST['numdel'])
+    
+        check_event_id = Event.objects.filter(id=event)
+        pw = request.POST['pw']
+        if check_event_id and (pw == password) :
+            event.delete()
+
+        else:
+            pass
+    return HttpResponseRedirect(reverse('event:home',))
+
+    '''password = "delete"
+    if request.method == 'POST':
+        #event = get_object_or_404(Event, pk=request.POST['numdel'])
+        id_event = Event.objects.get(pk=request.POST['numdel'])
+    
+        check_event_id = Event.objects.filter(id=id_event)
+        pw = request.POST['pw']
+        if check_event_id and (pw == password) :
+            event.delete()
+
+        else:
+            pass
+    return HttpResponseRedirect(reverse('event:home',))'''
+
+
+    '''event = get_object_or_404(Event, pk=request.POST['numdel'])
+    password = "delete"
+    if request.method == 'POST':
+        pw = request.POST['pw']
+        if pw == password:
+            try:
+                event.delete()
+            except:
+                pass
+        else:
+            pass
+    return HttpResponseRedirect(reverse('event:home',))'''

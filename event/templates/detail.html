@@ -1,38 +1,126 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'event/detailbg.css' %}" />
+
 <html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.buttonRed {
+    background-color: white;
+    color: red;
+    
+}
+.buttonRed:hover {
+    background-color: #b30000;
+    color: white;
+}
+
+.buttonBlack {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+}
+.buttonBlack:hover {
+    background-color: #555555;
+    color: white;
+}
+
+.boxBlue {
+	display: inline-block;
+    margin: 4px 2px;
+    padding: 40px 40px;
+    border: dotted #0000ff;
+    background-color: rgba(77, 210, 255, 0.5);
+      
+}
+
+.boxYellow {
+	display: inline-block;
+    margin: 4px 2px;
+    padding: 40px 40px;
+    border: dotted #0000ff;
+    background-color: rgba(255, 255, 153, 0.5);
+      
+}
+
+input[type=text] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: rgba(230, 255, 255, 0.5);
+    color: black;
+}
+strong{color: rgb(0, 0, 153);}
+
+</style>
+
+
     <body>
-        <h1>Event : {{event.event_name}}</h1>
-        Detail : {{event.event_detail}}<br>
-        Location : {{event.event_location}}<br>
-        Start at : {{event.event_numset}} person<br>
-        Total register : {{event.pcount}}
 
+    <div class="container">
 
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="text-center">
+
+            <h1>Event : {{event.event_name}}</h1>
+         
+            </div>
+        </div>
+    </div>
+   
+
+    
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">    
+
+    <div class="boxBlue" >
+    <font size="5">
+        <strong>Detail :</strong> {{event.event_detail}}<br>
+        <strong>Location :</strong> {{event.event_location}}<br>
+        <strong>Start at :</strong> {{event.event_numset}} person<br>
+        <strong>Total register :</strong> {{event.pcount}}
+        </font>
+      
+        </div>
+         </div>
+         
+        </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3"> 
+        
         <h3>Person register list</h3>
+        <table class="table table-hover">
+
         {% if event.person_set.all %}
             {% for person in event.person_set.all %}
             <tr>
+
                 <form action="{% url 'event:del' event.id %}" method="POST">
                 {% csrf_token %}
-                <td>{{ forloop.counter }}: {{ person.fname }} - {{ person.lname }}</td>
-                <td><button type="submit" name="del_btn" value="{{ person.id }}" onclick="myFunction()" >Delete</button></a></td>
-
-
-
-<p id="demo"></p>
-
-<script>
-function myFunction() {
-    var txt;
-    if (confirm("Press a button!") == true) {
-        value = "{{ person.id }}";
-    } else {
-        value = null;
-    }
-    document.getElementById("demo").innerHTML = txt;
-}
-</script>
-
                 
+                <td>{{ forloop.counter }}: {{ person.fname }} - {{ person.lname }}</td>
+                <td><button class="button buttonRed" type="submit" name="del_btn" value="{{ person.id }}">Delete {{ forloop.counter }}</button></a></td>
+
                 </br>
                 </form>
             </tr>
@@ -40,7 +128,12 @@ function myFunction() {
         {% else %}
             <p>No anyone register</p>
         {% endif %}
-
+        </td></tr>
+       </table>
+         </div>
+         </div>
+         </div>
+    
         <h2>Register</h2>
         <form action="{% url 'event:event_detail' event.id %}" method="POST">
             {% csrf_token %}
@@ -48,6 +141,10 @@ function myFunction() {
             Last Name : <input type="text" name="lastname" id="id_lastname" placeholder="Your last name" /></br>
             <input type="submit" value="Submit" id="id_submit" />
         </form>
-        <a href="/">Home
+  
+
+      <a class="button buttonBlack" href="/">Home</a></td></tr>
+    
+
     </body>
 </html>
