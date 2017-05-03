@@ -51,14 +51,14 @@ def delete_event(request):
         event = get_object_or_404(Event, pk=request.POST['numdel'])
         #id_event = Event.objects.get(pk=request.POST['numdel'])
     
-        check_event_id = Event.objects.filter(id=event)
+        #check_event_id = Event.objects.filter(id=event)
         pw = request.POST['pw']
-        if check_event_id and (pw == password) :
+        if (pw == password) :
             event.delete()
 
         else:
             pass
-    return HttpResponseRedirect(reverse('event:home',))
+    return HttpResponseRedirect(reverse('event:homeadmin',))
 
     '''password = "delete"
     if request.method == 'POST':
@@ -87,3 +87,8 @@ def delete_event(request):
         else:
             pass
     return HttpResponseRedirect(reverse('event:home',))'''
+
+def admin_home(request):
+    event_list = Event.objects.order_by('event_name')
+    context = {'event_list': event_list}
+    return render(request, 'homeadmin.html', context)

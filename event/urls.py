@@ -11,4 +11,5 @@ urlpatterns = [
     #url(r'^(?P<event_id>[0-9]+)/(?P<person_id>[0-9]+)$', views.delete_name, name='del_name'),
     url(r'^(?P<event_id>[0-9]+)/delete$', views.delete_name, name='del'),
     url(r'^delete$', views.delete_event, name='del_event'),
+    url(r'^adminhome$', views.admin_home, name='homeadmin'),
 ]
