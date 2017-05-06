@@ -4,6 +4,8 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'event/tablehyperlink.css' %}" />
 
+<link rel="stylesheet" type="text/css" href="{% static 'event/navbar.css' %}" />
+
 
 
 <html>
@@ -13,6 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <title>Event Start</title>
 </head>
 
 
@@ -75,26 +78,24 @@ a:active {
 
 </style>
 
-    <head>
-        <title>Event Start</title>
-    </head>
-    <body>
+<ul>
+  <li><a href="">Home</a></li>
+  <li><a href="new_event">Start new Event</a></li>
+  <li style="float:right"><a href="about">About</a>
+</ul>
 
+    
+    <body>
+            <div class="container">
             <div class="text-center">
+            
 
             <h1>Event</h1>
-         
             </div>
+            </div>
+    
       
 
-
-
-
-
-        
-        
-        
-        
         <div style="text-align:center">  
         <a class="button buttonBlack" href="new_event">Start new Event</a>
         </div>

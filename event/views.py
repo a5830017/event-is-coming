@@ -13,13 +13,17 @@ def home(request):
 
 
 def new_event(request):
+    event = Event.objects.all()
     if request.method == 'POST':
-        Event.objects.create(event_name=request.POST['name'], event_detail=request.POST['detail'],
-            event_numset=request.POST['numset'], event_location=request.POST['location'], pcount=0,)
+        if request.POST['name'] == "":
+            return render(request, 'create_event.html', {'event': event, 'error_msg':"Please input Event Name"},)
+        else:
+            Event.objects.create(event_name=request.POST['name'], event_detail=request.POST['detail'],
+                event_numset=request.POST['numset'], event_location=request.POST['location'], pcount=0,)
         return HttpResponseRedirect(reverse('event:home',))
 
-    event = Event.objects.all()
-    return render(request, 'create_event.html', {'event': event})
+    
+    return render(request, 'create_event.html', {'event': event},)
 
 
 def event_detail(request, event_id):
@@ -92,3 +96,6 @@ def admin_home(request):
     event_list = Event.objects.order_by('event_name')
     context = {'event_list': event_list}
     return render(request, 'homeadmin.html', context)
+
+def about(request):
+    return render(request, 'about.html')
