@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^delete$', views.delete_event, name='del_event'),
     url(r'^adminhome$', views.admin_home, name='homeadmin'),
     url(r'^about$', views.about, name='about'),
+    url(r'^login$', views.login, name='login'),
+    url(r'^login_page$', views.login_page, name='login_page'),
+    url(r'^logout$', views.logout, name='logout'),
 ]

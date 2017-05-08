@@ -2,6 +2,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+#from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 
 from .models import Event , Person
 
@@ -91,7 +94,31 @@ def delete_event(request):
         else:
             pass
     return HttpResponseRedirect(reverse('event:home',))'''
+def login_page(request):
+    return render(request, 'login.html')
 
+
+
+def login(request):    
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user)
+        #return HttpResponseRedirect(reverse('event:homeadmin',))
+        #return HttpResponseRedirect('/adminhome')
+        return HttpResponseRedirect('/adminhome')
+    else:
+        return HttpResponseRedirect('/login')
+
+
+def logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('event:login',))
+
+
+
+@login_required(login_url='event:login_page')
 def admin_home(request):
     event_list = Event.objects.order_by('event_name')
     context = {'event_list': event_list}
